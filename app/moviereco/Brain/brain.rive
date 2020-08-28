@@ -1,0 +1,63 @@
+! version = 2.0
+
+! sub i'm = i am
+! sub i'll = i will
+! sub i'ld = i would 
+! sub i've = i have
+! sub don't = do not
+! sub won't = will not
+! sub dont = do not
+! sub wont = will not
+! sub wouldn't = would not
+! sub wouldnt = would not
+! sub isn't = is not 
+! sub what's = what is 
+! sub whats = what is 
+! sub you'll = you will
+! sub you'd = you would
+! sub you've = you have
+! sub mocie = movie
+! sub moviw = movie
+! sub mociw = movie
+! sub movir = movie
+
+
+> begin
++ request
+* <get met> == undefined => <set met=true>{topic=start}{ok}
+- {ok}
+< begin
+
+
+> topic start 
++ (hello|hi|hey) [*]
+- Hello, how can I help you today?
+
++ *
+- Sorry I couldn't understand what you were saying!\nCan you please repeat that!
+
++ [*] (find|watch|recommend) [a] (movie|movies) [*]
+- Sure, I'm going to ask you some questions now{topic=questions}
+< topic
+
+> topic questions 
++ (go ahead|okay|ok)
+- Name your three top favourite movies {topic=movies}
+< topic
+
+> topic movies
++ *
+- <set movie=<star>><call>setmovies <get movie></call>
+< topic
+
+> object setmovies python
+import utils as ML
+movie = ''
+for x in args:
+	movie = movie+" "+x
+movies = ML.recommendations(movie[1:len(movie)])
+va=[]
+for x in movies:
+	va.append(str(x))
+return va
+< object
