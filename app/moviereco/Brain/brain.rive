@@ -42,12 +42,23 @@
 
 > topic questions 
 + (go ahead|okay|ok)
-- Name your three top favourite movies {topic=movies}
+- What is your favourite genre?{topic=genre}
 < topic
 
 > topic movies
 + *
 - <set movie=<star>><call>setmovies <get movie></call>
+< topic
+
+> topic genre
++ (romance|drama|historical)
+- Nice!! \n Now name your favourite movie{topic=movies}
++ (scifi|action|documentry)
+- Noted... \n Now name your favourite movie{topic=movies}
++ (romcom|comedy)
+- HAHA... ME TOO!! \n Now name your favourite movie{topic=movies}
++ (horror|thriller)
+- Impressive :O \n Now name your favourite movie{topic=movies}
 < topic
 
 > object setmovies python
